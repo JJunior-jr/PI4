@@ -5,21 +5,37 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 
-# %% Configurações para exibir todas as colunas do DataFrame
+# %% CONFIGURAÇÕES PARA EXIBIR TODAS AS COLUNAS DO DATAFRAME
 df=pd.read_csv(r'PI4\data\academic Stress level - maintainance 1.csv',sep=',')
 df.head()
 
 
-#%%
+#%% CÓPIA DE SEGURANÇA DO DATAFRAME ORIGINAL
 df_original= df.copy()
 
-# %%
+# %% CONTAGEM DE VALORES NULOS
 
 print(df.isnull().sum())
-# %%
+#%%   ESTATÍSTICA DESCRITIVA DE COLUNAS NUMÉRICAS
 print('\nEstatística Descritiva para colunas numéricas')
 display(df.describe())
-# %%
+
+#%%  ESTATÍSTICA DESCRITIVA DE COLUNAS CATEGÓRICAS
+
+print('\nEstatística Descritiva para colunas categóricas')
+display(df.describe(include=['object']))
+
+
+#%% # CONTAR COLUNAS NUMÉRICAS E CATEGÓRICAS
+
+num_col = df.select_dtypes(include=['number']).columns
+print(f'Quantidade de colunas numéricas: {len(num_col)}')
+
+
+cat_col = df.select_dtypes(include=['object']).columns
+print(f'Quantidade de colunas categóricas: {len(cat_col)}')
+
+# %% RENOMEANDO AS COLUNAS PARA PORTUGUÊS
 df.rename(columns={
     'Your Academic Stage': 'Estagio_Academico',
     'Peer pressure': 'Pressao_Colegas',
@@ -32,11 +48,23 @@ df.rename(columns={
 }, inplace=True)
 
 #%%
+df['Ambiente_Estudo'].fillna(df['Ambiente_Estudo'].mode()[0], inplace=True)
 
-print('\nEstatística Descritiva para colunas categóricas')
-display(df.describe(include=['object']))
+categoria_col = ['Estagio_Academico', 'Ambiente_Estudo', 'Estrategia_Enfrentamento', 'Maus_Habitos']
 
-# %%
+print('Análise Descritiva de Variáveis Categóricas:\n')
+for col in categorical_cols:
+    print(f'--- {col} ---')
+    counts = df[col].value_counts()
+    percentages = df[col].value_counts(normalize=True) * 100
+    summary = pd.DataFrame({'Contagem': counts, 'Porcentagem': percentages.round(2)})
+    print(summary.to_markdown())
+    print('\n')
+
+
+
+
+# %% 
 
 
 df['Ambiente_Estudo'].value_counts().plot(kind='bar')
