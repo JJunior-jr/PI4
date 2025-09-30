@@ -22,22 +22,22 @@ Nesta etapa, o conjunto de dados foi carregado e uma visão geral inicial foi ob
 ```python
 import pandas as pd
 
-data = pd.read_csv("/home/ubuntu/upload/academicStresslevel-maintainance1.csv")
+df = pd.read_csv("caminho_do_arquivo.csv")
 
 print("Primeiras 5 linhas do dataset:")
-print(data.head())
+print(df.head())
 
-print("\nInformações do dataset:")
-data.info()
+print("\nInformações do dfset:")
+df.info()
 
 print("\nValores ausentes por coluna:")
-print(data.isnull().sum())
+print(df.isnull().sum())
 
 print("\nEstatísticas descritivas para colunas numéricas:")
-print(data.describe())
+print(df.describe())
 
 print("\nEstatísticas descritivas para colunas categóricas:")
-print(data.describe(include="object"))
+print(df.describe(include="object"))
 ```
 
 **Resultados Chave:**
@@ -55,10 +55,10 @@ Foi realizada uma análise de frequência e porcentagem para as variáveis categ
 ```python
 import pandas as pd
 
-data = pd.read_csv("/home/ubuntu/upload/academicStresslevel-maintainance1.csv")
+df = pd.read_csv("/home/ubuntu/upload/academicStresslevel-maintainance1.csv")
 
 # Renomear colunas para facilitar o uso
-data.rename(columns={
+df.rename(columns={
     'Your Academic Stage': 'Estagio_Academico',
     'Peer pressure': 'Pressao_Colegas',
     'Academic pressure from your home': 'Pressao_Academica_Casa',
@@ -70,16 +70,16 @@ data.rename(columns={
 }, inplace=True)
 
 # Preencher valores ausentes na coluna 'Ambiente_Estudo' com a moda
-data['Ambiente_Estudo'].fillna(data['Ambiente_Estudo'].mode()[0], inplace=True)
+df['Ambiente_Estudo'].fillna(df['Ambiente_Estudo'].mode()[0], inplace=True)
 
 categorical_cols = ['Estagio_Academico', 'Ambiente_Estudo', 'Estrategia_Enfrentamento', 'Maus_Habitos']
 
 print('Análise Descritiva de Variáveis Categóricas:\n')
 for col in categorical_cols:
     print(f'--- {col} ---')
-    counts = data[col].value_counts()
-    percentages = data[col].value_counts(normalize=True) * 100
-    summary = pd.DataFrame({'Contagem': counts, 'Porcentagem': percentages.round(2)})
+    counts = df[col].value_counts()
+    percentages = df[col].value_counts(normalize=True) * 100
+    summary = pd.dfFrame({'Contagem': counts, 'Porcentagem': percentages.round(2)})
     print(summary.to_markdown())
     print('\n')
 ```
@@ -99,10 +99,10 @@ Estatísticas descritivas (média, desvio padrão, mínimo, máximo, quartis) fo
 ```python
 import pandas as pd
 
-data = pd.read_csv("/home/ubuntu/upload/academicStresslevel-maintainance1.csv")
+df = pd.read_csv("/home/ubuntu/upload/academicStresslevel-maintainance1.csv")
 
 # Renomear colunas para facilitar o uso
-data.rename(columns={
+df.rename(columns={
     'Your Academic Stage': 'Estagio_Academico',
     'Peer pressure': 'Pressao_Colegas',
     'Academic pressure from your home': 'Pressao_Academica_Casa',
@@ -114,12 +114,12 @@ data.rename(columns={
 }, inplace=True)
 
 # Preencher valores ausentes na coluna 'Ambiente_Estudo' com a moda
-data['Ambiente_Estudo'].fillna(data['Ambiente_Estudo'].mode()[0], inplace=True)
+df['Ambiente_Estudo'].fillna(df['Ambiente_Estudo'].mode()[0], inplace=True)
 
 numerical_cols = ['Pressao_Colegas', 'Pressao_Academica_Casa', 'Competicao_Academica', 'Indice_Estresse']
 
 print('Análise Descritiva de Variáveis Numéricas:\n')
-print(data[numerical_cols].describe().to_markdown())
+print(df[numerical_cols].describe().to_markdown())
 ```
 
 **Resultados Chave:**
@@ -135,10 +135,10 @@ Foi calculada a matriz de correlação de Pearson para as variáveis numéricas 
 ```python
 import pandas as pd
 
-data = pd.read_csv("/home/ubuntu/upload/academicStresslevel-maintainance1.csv")
+df = pd.read_csv("/home/ubuntu/upload/academicStresslevel-maintainance1.csv")
 
 # Renomear colunas para facilitar o uso
-data.rename(columns={
+df.rename(columns={
     'Your Academic Stage': 'Estagio_Academico',
     'Peer pressure': 'Pressao_Colegas',
     'Academic pressure from your home': 'Pressao_Academica_Casa',
@@ -150,18 +150,18 @@ data.rename(columns={
 }, inplace=True)
 
 # Preencher valores ausentes na coluna 'Ambiente_Estudo' com a moda
-data['Ambiente_Estudo'].fillna(data['Ambiente_Estudo'].mode()[0], inplace=True)
+df['Ambiente_Estudo'].fillna(df['Ambiente_Estudo'].mode()[0], inplace=True)
 
 numerical_cols = ['Pressao_Colegas', 'Pressao_Academica_Casa', 'Competicao_Academica', 'Indice_Estresse']
 categorical_cols = ['Estagio_Academico', 'Ambiente_Estudo', 'Estrategia_Enfrentamento', 'Maus_Habitos']
 
 print('Matriz de Correlação para Variáveis Numéricas:\n')
-print(data[numerical_cols].corr().to_markdown())
+print(df[numerical_cols].corr().to_markdown())
 
 print('\n\nMédia do Índice de Estresse por Categoria:\n')
 for col in categorical_cols:
     print(f'--- {col} ---\n')
-    print(data.groupby(col)['Indice_Estresse'].mean().sort_values(ascending=False).to_markdown())
+    print(df.groupby(col)['Indice_Estresse'].mean().sort_values(ascending=False).to_markdown())
     print('\n')
 ```
 
@@ -185,10 +185,10 @@ import seaborn as sns
 sns.set_style("whitegrid")
 plt.rcParams["figure.figsize"] = (10, 6)
 
-data = pd.read_csv("/home/ubuntu/upload/academicStresslevel-maintainance1.csv")
+df = pd.read_csv("/home/ubuntu/upload/academicStresslevel-maintainance1.csv")
 
 # Renomear colunas para facilitar o uso
-data.rename(columns={
+df.rename(columns={
     'Your Academic Stage': 'Estagio_Academico',
     'Peer pressure': 'Pressao_Colegas',
     'Academic pressure from your home': 'Pressao_Academica_Casa',
@@ -200,11 +200,11 @@ data.rename(columns={
 }, inplace=True)
 
 # Preencher valores ausentes na coluna 'Ambiente_Estudo' com a moda
-data['Ambiente_Estudo'].fillna(data['Ambiente_Estudo'].mode()[0], inplace=True)
+df['Ambiente_Estudo'].fillna(df['Ambiente_Estudo'].mode()[0], inplace=True)
 
 # 1. Histograma do Índice de Estresse
 plt.figure(figsize=(8, 5))
-sns.histplot(data['Indice_Estresse'], bins=5, kde=True)
+sns.histplot(df['Indice_Estresse'], bins=5, kde=True)
 plt.title('Distribuição do Índice de Estresse')
 plt.xlabel('Índice de Estresse')
 plt.ylabel('Frequência')
@@ -217,7 +217,7 @@ categorical_cols = ['Estagio_Academico', 'Ambiente_Estudo', 'Estrategia_Enfrenta
 
 for col in categorical_cols:
     plt.figure(figsize=(10, 6))
-    sns.barplot(x=col, y='Indice_Estresse', data=data, palette='viridis', errorbar=None)
+    sns.barplot(x=col, y='Indice_Estresse', data=df, palette='viridis', errorbar=None)
     plt.title(f'Média do Índice de Estresse por {col.replace("_", " ")}')
     plt.xlabel(col.replace("_", " "))
     plt.ylabel('Média do Índice de Estresse')
@@ -229,14 +229,14 @@ for col in categorical_cols:
 # 3. Mapa de Calor da Correlação
 numerical_cols = ['Pressao_Colegas', 'Pressao_Academica_Casa', 'Competicao_Academica', 'Indice_Estresse']
 plt.figure(figsize=(8, 7))
-sns.heatmap(data[numerical_cols].corr(), annot=True, cmap='coolwarm', fmt=".2f")
+sns.heatmap(df[numerical_cols].corr(), annot=True, cmap='coolwarm', fmt=".2f")
 plt.title('Mapa de Calor da Correlação entre Variáveis Numéricas')
 plt.tight_layout()
 plt.savefig('correlation_heatmap.png')
 plt.close()
 
 # 4. Pair Plot para Variáveis Numéricas
-sns.pairplot(data[numerical_cols])
+sns.pairplot(df[numerical_cols])
 plt.suptitle('Pair Plot das Variáveis Numéricas', y=1.02)
 plt.tight_layout()
 plt.savefig('numerical_pairplot.png')
@@ -256,5 +256,14 @@ print("Visualizações geradas e salvas como arquivos PNG.")
 
 ## Conclusão
 
-Esta análise exploratória forneceu uma compreensão inicial dos fatores que influenciam o estresse acadêmico. As pressões externas (colegas, família, competição), o ambiente de estudo, as estratégias de enfrentamento e a presença de maus hábitos foram identificados como elementos importantes relacionados ao nível de estresse dos estudantes. Alunos do ensino médio demonstraram ser o grupo com maior vulnerabilidade ao estresse acadêmico nesta amostra.
+-1. Nível de Estresse Geral: O índice de estresse médio na amostra é de aproximadamente 3.72 (em uma escala de 1 a 5), indicando que os estudantes, em geral, obtem um nível de estresse moderado a alto.
 
+-2.*Pressão dos Colegas, Pressão Acadêmica de Casa e Competição Acadêmica:* Todas essas variáveis numéricas apresentaram correlações positivas e moderadas com o Indice_Estresse (entre 0.41 e 0.47). Acaba não sendo uma correlação forte mas tem uma contribuição que sugere que quanto maior a percepção dessas pressões, maior tende a ser o nível de estresse acadêmico do estudante.
+
+-3.Estágio Acadêmico e Estresse:
+Alunos do ensino médio (high school) reportaram o maior índice de estresse médio (aproximadamente 3.83), seguidos por pós-graduandos (3.73) e graduandos (3.69). Isso pode indicar uma maior vulnerabilidade ao estresse em estágios iniciais da vida acadêmica.
+-4.Impacto do Ambiente de Estudo:
+Ambientes de estudo disrupted (interrompidos) e Noisy (barulhentos) estão associados a índices de estresse mais elevados (4.03 e 3.84, respectivamente) em comparação com ambientes Peaceful (tranquilos) (3.50). Isso ressalta a importância de um ambiente apropriado para o estudo na redução do estresse.
+
+-5.Maus Hábitos e Estresse:
+A presença de maus hábitos (Yes) está claramente associada a um índice de estresse médio significativamente mais elevado (aproximadamente 4.30) em comparação com aqueles que não têm maus hábitos (No, 3.68) ou preferem não dizer (3.57). Isso sugere uma possível relação entre o uso de maus hábitos e a tentativa de lidar com o estresse, ou que maus hábitos podem ser um fator que contribui para o aumento do estresse.
