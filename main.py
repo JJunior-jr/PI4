@@ -150,9 +150,8 @@ sns.pairplot(df[numericas_col])
 plt.suptitle('Pair Plot das Variáveis Numéricas', y=1.02) # Ajusta o título para não sobrepor
 plt.tight_layout()
 plt.savefig('numerical_pairplot.png')
-plt. show()#plt.close()
+plt. show()
+#plt.close()
 
 #print("Visualizações geradas e salvas como arquivos PNG.")
 
-
-# %%
